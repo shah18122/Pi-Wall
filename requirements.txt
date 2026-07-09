@@ -1,0 +1,6 @@
+scapy>=2.5          # live packet capture (real mode)
+scikit-learn>=1.4   # IsolationForest anomaly detection
+numpy>=1.26
+flask>=3.0          # live dashboard
+pyyaml>=6.0         # config files
+anthropic>=0.40     # optional: GenAI threat advisor (needs ANTHROPIC_API_KEY)

@@ -1,0 +1,17 @@
+[Unit]
+Description=Pi-Wall AI Firewall
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Live capture needs root (raw sockets) and nftables for enforcement.
+ExecStart=/opt/pi-wall/.venv/bin/pi-wall run --live --iface eth0 --enforce
+WorkingDirectory=/opt/pi-wall
+Restart=on-failure
+RestartSec=5
+# Provide the LLM advisor key here if you want Claude-powered explanations:
+# Environment=ANTHROPIC_API_KEY=sk-ant-...
+
+[Install]
+WantedBy=multi-user.target

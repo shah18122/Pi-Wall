@@ -1,0 +1,17 @@
+[project]
+name = "pi-wall"
+version = "1.0.0"
+description = "AI-augmented firewall for the Raspberry Pi"
+requires-python = ">=3.9"
+dependencies = ["scapy>=2.5", "scikit-learn>=1.4", "numpy>=1.26",
+                "flask>=3.0", "pyyaml>=6.0"]
+
+[project.optional-dependencies]
+ai = ["anthropic>=0.40"]
+
+[project.scripts]
+pi-wall = "piwall.cli:main"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"

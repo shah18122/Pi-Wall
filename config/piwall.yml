@@ -1,0 +1,25 @@
+# Pi-Wall runtime configuration
+capture:
+  interface: eth0            # NIC to sniff (real mode); ignored in --simulate
+  bpf_filter: "ip"          # Berkeley Packet Filter for scapy
+
+detection:
+  warmup_flows: 30          # flows used to train the anomaly model before scoring
+  anomaly_contamination: 0.03
+  scan_threshold: 15        # distinct dst ports from one src within window => port scan
+  synflood_threshold: 60    # half-open SYNs to one dst within window => SYN flood
+  volumetric_pps: 400       # packets/sec from one src => volumetric flood
+  window_seconds: 10        # sliding window for host aggregates
+  block_score: 70           # threat score at/above which a source is auto-blocked
+
+enforcement:
+  mode: dry-run             # dry-run | enforce  (enforce uses nftables on Linux+root)
+
+ai_advisor:
+  enabled: true             # natural-language threat explanations
+  model: claude-opus-4-8    # used only if ANTHROPIC_API_KEY is set; else template fallback
+  max_explanations_per_min: 8
+
+dashboard:
+  host: 127.0.0.1
+  port: 8787

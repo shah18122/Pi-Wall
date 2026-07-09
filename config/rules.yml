@@ -1,0 +1,18 @@
+# Pi-Wall firewall rules — first match wins, default policy applies if none match.
+# Fields: action (allow|deny), proto (tcp|udp|any), src (CIDR), dport (0 = any), note
+default_policy: allow          # 'deny' = strict whitelist; 'allow' = monitor-mostly
+
+rules:
+  - { action: allow, proto: tcp, src: 0.0.0.0/0, dport: 443,  note: HTTPS }
+  - { action: allow, proto: tcp, src: 0.0.0.0/0, dport: 80,   note: HTTP }
+  - { action: allow, proto: udp, src: 0.0.0.0/0, dport: 53,   note: DNS }
+  - { action: allow, proto: tcp, src: 10.0.0.0/8, dport: 22,  note: internal SSH }
+  - { action: deny,  proto: tcp, src: 0.0.0.0/0, dport: 22,   note: block external SSH }
+  - { action: deny,  proto: tcp, src: 0.0.0.0/0, dport: 23,   note: block telnet }
+  - { action: deny,  proto: tcp, src: 0.0.0.0/0, dport: 3389, note: block RDP }
+  - { action: deny,  proto: tcp, src: 0.0.0.0/0, dport: 445,  note: block SMB }
+
+# Hosts that must never be auto-blocked (loopback, gateway, admin subnet).
+never_block:
+  - 127.0.0.1
+  - 10.0.0.1
